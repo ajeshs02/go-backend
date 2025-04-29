@@ -1,15 +1,23 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/ajesh02/go-backend/internal/env"
+	"github.com/ajesh02/go-backend/internal/store"
+)
 
 func main() {
 
 	cfg := config{
-		addr: ":8080",
+		addr: env.GetString("ADDR", ":8081"),
 	}
+
+	store := store.NewStorage(nil)
 
 	app := application{
 		config: cfg,
+		store:  store,
 	}
 
 	mux := app.mount()
